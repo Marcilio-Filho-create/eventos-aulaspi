@@ -33,7 +33,7 @@ public class EventosController {
 	@PostMapping
 	public String adicionar(Evento evento) {
 		
-		System.out.println(evento);
+		//System.out.println(evento);
 		er.save(evento);
 		
 		return "eventos/evento-adicionado";
@@ -70,8 +70,8 @@ public class EventosController {
 	@PostMapping("/{idEvento}")
 	public String salvarConvidado(@PathVariable Long idEvento, Convidado convidado) {
 		
-		System.out.println("ID:" + idEvento);
-		System.out.println(convidado);
+		//System.out.println("ID:" + idEvento);
+		//System.out.println(convidado);
 		
 		Optional<Evento> opt = er.findById(idEvento);
 		if(opt.isEmpty()) {
