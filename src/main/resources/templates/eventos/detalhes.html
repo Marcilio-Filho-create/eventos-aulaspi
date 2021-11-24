@@ -34,12 +34,15 @@
 					<div class="card">
 						<div class="card-content">
 							<span class="card-title">Adicionar Convidado</span>
-							<form action="" method="post">
+							<form th:action="@{/eventos/{idEvento}(idEvento=${ev.id})}" method="post">
 								<div>
-								<label>Nome: </label><input type="text" name="nome">
+									<input type="hidden" name="id" th:value="${convidado.id}" readonly="readonly">
 								</div>
 								<div>
-								<label>RG: </label><input type="text" name="rg">
+									<label>Nome: </label><input type="text" name="nome" th:value="${convidado.nome}">
+								</div>
+								<div>
+									<label>RG: </label><input type="text" name="rg" th:value="${convidado.rg}">
 								</div>
 								<div>
 									<button type="submit" class="btn">Salvar</button>
@@ -69,7 +72,10 @@
 										<td th:text="${c.id}">1</td>
 										<td th:text="${c.nome}">Fer</td>
 										<td th:text="${c.rg}">001</td>
-										<td><a th:href="@{/eventos/{idE}/deletar/{idC}(idE=${c.evento.id},idC=${c.id})}"><i class="material-icons">delete_forever</i></a></td>
+										<td>
+											<a th:href="@{/eventos/{idE}/convidados/{idC}/selecionar(idE=${ev.id}, idC=${c.id})}"><i class="material-icons">edit</i></a>
+											<a th:href="@{/eventos/{idE}/deletar/{idC}(idE=${c.evento.id},idC=${c.id})}"><i class="material-icons">delete_forever</i></a>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -77,7 +83,6 @@
 					</div>
 				</div>
 			</div>
-	
 		</div>
 	</body>
 </html>

@@ -2,37 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<!-- Compiled and minified CSS -->
-    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<title>Eventos</title>
 	</head>
 	<body>
 	
 		<div th:replace="~{menu :: menu}"></div>
-		
 		<div class="container">
 			<h1>Adicionar Evento</h1>
-			
+	
 			<form action="/eventos" method="post">
-		
+	
 				<div>
-					<label>Nome: </label> <input type="text" name="nome">
+					<input type="hidden" name="id" th:value="${evento.id}" readonly="readonly">
 				</div>
 				<div>
-					<label>Local: </label> <input type="text" name="local">
+					<label>Nome:</label> <input type="text" name="nome" th:value="${evento.nome}">
 				</div>
 				<div>
-					<label>Data: </label> <input type="text" name="data">
+					<label>Local:</label> <input type="text" name="local" th:value="${evento.local}">
 				</div>
 				<div>
-					<label>Horário: </label> <input type="text" name="horario">
+					<label>Data:</label> <input type="text" name="data" th:value="${evento.data}">
+				</div>
+				<div>
+					<label>Horário:</label> <input type="text" name="horario" th:value="${evento.horario}">
 				</div>
 				<div>
 					<button class="waves-effect waves-light btn" type="submit">Salvar</button>
 					<button class="waves-effect waves-light btn" type="reset">Limpar</button>
 				</div>
-			
+	
 			</form>
 		</div>
+	
 	</body>
 </html>
