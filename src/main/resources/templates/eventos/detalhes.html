@@ -1,80 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<title>Eventos</title>
-</head>
-<body>
-
-	<div th:replace="~{menu :: menu}"></div>
-
-	<div class="container">
-		<h1>Detalhes do Evento</h1>
-
-		<div class="row">
-			<div class="col s12">
-				<div class="card">
-					<div class="card-content">
-						<span class="card-title">Evento</span>
-						<p><strong>Id: </strong><span th:text="${ev.id}">1</span></p>
-						<p><strong>Nome: </strong><span th:text="${ev.nome}">1</span></p>
-						<p><strong>Local: </strong><span th:text="${ev.local}">1</span></p>
-						<p><strong>Data: </strong><span th:text="${ev.data}">1</span></p>
-						<p><strong>Horário: </strong><span th:text="${ev.horario}">1</span></p>
+	<head>
+		<meta charset="UTF-8">
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<title>Eventos</title>
+	</head>
+	<body>
+	
+		<div th:replace="~{menu :: menu}"></div>
+	
+		<div class="container">
+			<h1>Detalhes do Evento</h1>
+	
+			<div class="row">
+				<div class="col s12">
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title">Evento</span>
+							<p><strong>Id: </strong><span th:text="${ev.id}">1</span></p>
+							<p><strong>Nome: </strong><span th:text="${ev.nome}">1</span></p>
+							<p><strong>Local: </strong><span th:text="${ev.local}">1</span></p>
+							<p><strong>Data: </strong><span th:text="${ev.data}">1</span></p>
+							<p><strong>Horário: </strong><span th:text="${ev.horario}">1</span></p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col s12">
-				<div class="card">
-					<div class="card-content">
-						<span class="card-title">Adicionar Convidado</span>
-						<form action="" method="post">
-							<div>
-							<label>Nome: </label><input type="text" name="nome">
-							</div>
-							<div>
-							<label>RG: </label><input type="text" name="rg">
-							</div>
-							<div>
-								<button type="submit" class="btn">Salvar</button>
-								<button type="reset" class="btn">Limpar</button>
-							</div>
-						</form>
+			<div class="row">
+				<div class="col s12">
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title">Adicionar Convidado</span>
+							<form action="" method="post">
+								<div>
+								<label>Nome: </label><input type="text" name="nome">
+								</div>
+								<div>
+								<label>RG: </label><input type="text" name="rg">
+								</div>
+								<div>
+									<button type="submit" class="btn">Salvar</button>
+									<button type="reset" class="btn">Limpar</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col s12">
-				<div class="card">
-					<div class="card-content">
-						<span class="card-title">Convidados:</span>
-						<table class="highlight">
-							<thead>
-								<tr>
-									<th>Id </th>
-									<th>Nome </th>
-									<th>RG </th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="c : ${convidados}">
-									<td th:text="${c.id}">1</td>
-									<td th:text="${c.nome}">Fer</td>
-									<td th:text="${c.rg}">001</td>
-								</tr>
-							</tbody>
-						</table>
+			<div class="row">
+				<div class="col s12">
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title">Convidados:</span>
+							<table class="highlight">
+								<thead>
+									<tr>
+										<th>Id </th>
+										<th>Nome </th>
+										<th>RG </th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="c : ${convidados}">
+										<td th:text="${c.id}">1</td>
+										<td th:text="${c.nome}">Fer</td>
+										<td th:text="${c.rg}">001</td>
+										<td><a th:href="@{/eventos/{idE}/deletar/{idC}(idE=${c.evento.id},idC=${c.id})}"><i class="material-icons">delete_forever</i></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
+	
 		</div>
-
-	</div>
-</body>
+	</body>
 </html>
