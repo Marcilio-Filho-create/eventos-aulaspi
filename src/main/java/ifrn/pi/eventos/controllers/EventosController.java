@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ifrn.pi.eventos.models.Convidado;
 import ifrn.pi.eventos.models.Evento;
@@ -34,7 +35,7 @@ public class EventosController {
 	}
 	
 	@PostMapping
-	public String salvar(@Valid Evento evento, BindingResult result) {
+	public String salvar(@Valid Evento evento, BindingResult result, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
 			return form(evento);
@@ -42,6 +43,7 @@ public class EventosController {
 		
 		//System.out.println(evento);
 		er.save(evento);
+		attributes.addFlashAttribute("mensagem", "Evento adicionado com sucesso!");
 		
 		return "redirect:/eventos";
 	}
@@ -75,7 +77,7 @@ public class EventosController {
 	}
 	
 	@PostMapping("/{idEvento}")
-	public String salvarConvidado(@PathVariable Long idEvento, Convidado convidado) {
+	public String salvarConvidado(@PathVariable Long idEvento, Convidado convidado, RedirectAttributes attributes) {
 		
 		//System.out.println("ID:" + idEvento);
 		//System.out.println(convidado);
@@ -89,6 +91,7 @@ public class EventosController {
 		convidado.setEvento(evento);
 		
 		cr.save(convidado);
+		attributes.addFlashAttribute("mensagem", "Convidado adicionado com sucesso!");
 		
 		return "redirect:/eventos/{idEvento}";
 	}
@@ -138,7 +141,7 @@ public class EventosController {
 	}
 	
 	@GetMapping("/{id}/deletar")
-	public String apagarEvento(@PathVariable Long id) {
+	public String apagarEvento(@PathVariable Long id, RedirectAttributes attributes) {
 		Optional<Evento> opt = er.findById(id);
 		
 		if(!opt.isEmpty()) {
@@ -147,13 +150,14 @@ public class EventosController {
 			
 			cr.deleteAll(conv);
 			er.delete(evento);
+			attributes.addFlashAttribute("mensagem", "Evento removido com sucesso!");
 		}
 		
 		return "redirect:/eventos";
 	}
 	
 	@GetMapping("/{idE}/deletar/{idC}")
-	public String apagarConvidado(@PathVariable Long idE, @PathVariable Long idC) {
+	public String apagarConvidado(@PathVariable Long idE, @PathVariable Long idC, RedirectAttributes attributes) {
 		Optional<Convidado> optC = cr.findById(idC);
 		Optional<Evento> optE = er.findById(idE);
 		
@@ -163,11 +167,13 @@ public class EventosController {
 			
 			if(con.getEvento().getId() == eve.getId()) {
 				cr.delete(con);
+				attributes.addFlashAttribute("mensagem", "Convidado removido com sucesso!");
 			}
 			else {
 				return "redirect:/eventos";
 			}
 		}
+		
 		
 		return "redirect:/eventos/{idE}";
 	}
