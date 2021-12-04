@@ -12,22 +12,31 @@
 		<div class="container">
 			<h1>Adicionar Evento</h1>
 	
-			<form action="/eventos" method="post">
+			<form action="/eventos" method="post" th:object="${evento}">
 	
 				<div>
-					<input type="hidden" name="id" th:value="${evento.id}" readonly="readonly">
+					<input type="hidden" th:field="*{id}" readonly="readonly">
 				</div>
 				<div>
-					<label>Nome:</label> <input type="text" name="nome" th:value="${evento.nome}">
+					
+					<label>Nome:</label> 
+					<p class="red-text text-darken-2" th:errors="*{nome}"></p>
+					<input type="text" th:field="*{nome}">
 				</div>
 				<div>
-					<label>Local:</label> <input type="text" name="local" th:value="${evento.local}">
+					<label>Local:</label>
+					<p class="red-text text-darken-2" th:errors="*{local}"></p>
+					<input type="text" th:field="*{local}">
 				</div>
 				<div>
-					<label>Data:</label> <input type="text" name="data" th:value="${evento.data}">
+					<label>Data:</label>
+					<p class="red-text text-darken-2" th:errors="*{data}"></p>
+					<input type="text" th:field="*{data}">
 				</div>
 				<div>
-					<label>Horário:</label> <input type="text" name="horario" th:value="${evento.horario}">
+					<label>Horário:</label>
+					<p class="red-text text-darken-2" th:errors="*{horario}"></p>
+					<input type="text" th:field="*{horario}">
 				</div>
 				<div>
 					<button class="waves-effect waves-light btn" type="submit">Salvar</button>
