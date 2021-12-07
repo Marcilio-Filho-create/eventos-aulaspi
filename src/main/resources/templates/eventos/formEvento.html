@@ -31,12 +31,12 @@
 				<div>
 					<label>Data:</label>
 					<p class="red-text text-darken-2" th:errors="*{data}"></p>
-					<input type="text" th:field="*{data}">
+					<input type="date" th:field="*{data}">
 				</div>
 				<div>
 					<label>Horário:</label>
 					<p class="red-text text-darken-2" th:errors="*{horario}"></p>
-					<input type="text" th:field="*{horario}">
+					<input type="time" th:field="*{horario}">
 				</div>
 				<div>
 					<button class="waves-effect waves-light btn" type="submit">Salvar</button>

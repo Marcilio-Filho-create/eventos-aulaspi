@@ -41,7 +41,6 @@ public class EventosController {
 			return form(evento);
 		}
 		
-		//System.out.println(evento);
 		er.save(evento);
 		attributes.addFlashAttribute("mensagem", "Evento adicionado com sucesso!");
 		
@@ -56,10 +55,10 @@ public class EventosController {
 		return mv;
 	}
 	
-	@GetMapping("/{id}")
-	public ModelAndView detalhar(@PathVariable Long id, Convidado convidado) {
+	@GetMapping("/{idEvento}")
+	public ModelAndView detalhar(@PathVariable Long idEvento, Convidado convidado) {
 		ModelAndView md = new ModelAndView();
-		Optional<Evento> opt = er.findById(id);
+		Optional<Evento> opt = er.findById(idEvento);
 		
 		if(opt.isEmpty()) {
 			md.setViewName("redirect:/eventos");
@@ -77,23 +76,27 @@ public class EventosController {
 	}
 	
 	@PostMapping("/{idEvento}")
-	public String salvarConvidado(@PathVariable Long idEvento, Convidado convidado, RedirectAttributes attributes) {
-		
-		//System.out.println("ID:" + idEvento);
-		//System.out.println(convidado);
+	public ModelAndView salvarConvidado(@PathVariable Long idEvento, @Valid Convidado convidado, BindingResult result, RedirectAttributes attributes) {
+		ModelAndView md = new ModelAndView();
 		
 		Optional<Evento> opt = er.findById(idEvento);
 		if(opt.isEmpty()) {
-			return "redirect:/eventos";
+			md.setViewName("redirect:/eventos");
+			return md;
 		}
 		
 		Evento evento = opt.get();
 		convidado.setEvento(evento);
+		if(result.hasErrors()) {
+			return detalhar(evento.getId(), convidado);
+		}
 		
 		cr.save(convidado);
+		md.setViewName("redirect:/eventos/{idEvento}");
+		md.addObject("ev", evento);
 		attributes.addFlashAttribute("mensagem", "Convidado adicionado com sucesso!");
 		
-		return "redirect:/eventos/{idEvento}";
+		return md;
 	}
 	
 	@GetMapping("/{id}/selecionar")
@@ -173,7 +176,6 @@ public class EventosController {
 				return "redirect:/eventos";
 			}
 		}
-		
 		
 		return "redirect:/eventos/{idE}";
 	}
